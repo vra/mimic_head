@@ -12,18 +12,13 @@ Unofficial One-click Version of LivePortrait, with Webcam Support
 
 + Video mode:
 
-
 https://github.com/user-attachments/assets/1aef9ae6-7d05-4fea-a03c-2c3de76df8b1
 
-
-
 + Webcam mode:
-NOTE: FPS ~= 13 on my mac laptop and there is observable delay in this video
 
+**NOTE: FPS ~= 13 on my mac laptop and there is observable delay in this video**
 
 https://github.com/user-attachments/assets/6a2ce4c5-e3f2-40cd-9fe9-c081407aaca1
-
-
 
 
 ## Install and use

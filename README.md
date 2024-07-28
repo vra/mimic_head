@@ -12,20 +12,12 @@ Unofficial One-click Version of LivePortrait, with Webcam Support
 
 + Video mode:
 
-<video width="512" height="512" controls>
-  <source src="assets/videos/video_mode.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
+https://github.com/vra/mimic_head/blob/main/assets/videos/video_mode.mp4
 
 + Webcam mode:
 NOTE: FPS ~= 13 on my mac laptop and there is observable delay in this video
 
-<video width="512" height="512" controls>
-  <source src="assets/videos/webcam_mode.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
+https://github.com/vra/mimic_head/blob/main/assets/videos/webcam_mode.mp4
 
 
 ## Install and use

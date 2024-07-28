@@ -1,4 +1,5 @@
 import os
+import time
 
 import cv2
 import requests
@@ -100,10 +101,20 @@ class MimicHeadSDK:
                 download_one_file(save_folder, sub_path)
 
     def process(self, source_img, img):
+        t0 = time.time()
         if source_img is None:
             return
         self.pipeline.set_source_image(source_img)
-        return self.pipeline.process(img)
+        result = self.pipeline.process(img)
+        t1 = time.time()
+        print(t1-t0)
+        return result
+
+    def process_img(self, source_img, img):
+        if source_img is None:
+            return
+        self.pipeline.set_source_image(source_img)
+        return self.pipeline.process_img(img)
 
     def process_video(self, source_img, video_path):
         if source_img is None:

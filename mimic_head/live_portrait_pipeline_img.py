@@ -96,3 +96,32 @@ class LivePortraitPipeline(object):
         out = self.live_portrait_wrapper.warp_decode(self.f_s, self.x_s, x_d_i_new)
         I_p_i = self.live_portrait_wrapper.parse_output(out["out"])[0]
         return I_p_i
+
+    def process_img(self, img):
+        if img is None:
+            return
+        inference_cfg = self.live_portrait_wrapper.cfg  # for convenience
+
+        driving_rgb_lst = [img]
+        driving_rgb_lst_256 = [cv2.resize(_, (256, 256)) for _ in driving_rgb_lst]
+        I_d_lst = self.live_portrait_wrapper.prepare_driving_videos(driving_rgb_lst_256)
+
+        I_d_i = I_d_lst[0]
+        x_d_i_info = self.live_portrait_wrapper.get_kp_info(I_d_i)
+        R_d_i = get_rotation_matrix(
+            x_d_i_info["pitch"], x_d_i_info["yaw"], x_d_i_info["roll"]
+        )
+
+        R_new = R_d_i @ self.R_s
+        delta_new = self.x_s_info["exp"] + x_d_i_info["exp"]
+        scale_new = self.x_s_info["scale"] * x_d_i_info["scale"]
+        t_new = self.x_s_info["t"] + x_d_i_info["t"]
+
+        x_d_i_new = scale_new * (self.x_c_s @ R_new + delta_new) + t_new
+        x_d_i_new = self.live_portrait_wrapper.stitching(
+            self.x_s, x_d_i_new
+        ) + self.lip_delta_before_animation.reshape(-1, self.x_s.shape[1], 3)
+
+        out = self.live_portrait_wrapper.warp_decode(self.f_s, self.x_s, x_d_i_new)
+        I_p_i = self.live_portrait_wrapper.parse_output(out["out"])[0]
+        return I_p_i

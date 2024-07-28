@@ -22,22 +22,23 @@ def cli():
 @click.option("-p", "--port", default=7860, help="gradio server running port")
 def run(device, host, port):
     sdk = MimicHeadSDK()
+    size = 384
 
     webcam_interface = gr.Interface(
         sdk.process,
         inputs=[
-            gr.Image(label="Source Image"),
-            gr.Image(sources=["webcam"], streaming=True, label="Webcam"),
+            gr.Image(label="Source Image", height=size, width=size),
+            gr.Image(sources=["webcam"], streaming=True, label="Webcam", height=size, width=size),
         ],
         outputs=[
-            gr.Image(),
+            gr.Image(height=size, width=size),
         ],
         live=True,
     )
     video_interface = gr.Interface(
         sdk.process_video,
         inputs=[
-            gr.Image(label="Source Image"),
+            gr.Image(label="Source Image", height=size, width=size),
             gr.Video(sources=["upload"], label="Driving Video"),
         ],
         outputs=[
@@ -46,13 +47,13 @@ def run(device, host, port):
         live=True,
     )
     img_interface = gr.Interface(
-        fn=sdk.process,
+        fn=sdk.process_img,
         inputs=[
-            gr.Image(label="Source Image"),
-            gr.Image(sources=["upload"], label="Driving Image"),
+            gr.Image(label="Source Image", height=size, width=size),
+            gr.Image(sources=["upload"], label="Driving Image", height=size, width=size),
         ],
         outputs=[
-            gr.Image(),
+            gr.Image(height=size, width=size),
         ],
         live=True,
     )
